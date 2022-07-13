@@ -1,5 +1,5 @@
 # han2er-JSFEEN2022
 
-Private repository for @han2er
+app link:
 
-# English for kids
+# [English for kids](https://han2er.github.io/EFK/English%20for%20kids/main.html)
