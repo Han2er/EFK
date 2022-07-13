@@ -1,4 +1,3 @@
-const startButton = document.querySelector(".start-game");
 const newSheet = document.createElement("style");
 newSheet.id = "new-sheet";
 document.body.appendChild(newSheet);

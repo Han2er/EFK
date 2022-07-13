@@ -3,6 +3,7 @@
 import drawCards from "./drawCards.js";
 import cards from "./cards.js";
 import gameModeOn from "./gameModeOn.js";
+import startGame from "./game.js";
 
 let toggleBtn = false;
 let categoryIndex = -1;
@@ -21,24 +22,7 @@ drawCards(toggleBtn);
 chooseCategory(main.childNodes);
 
 // refresh page listener
-title.addEventListener("click", () => {
-  drawCards(toggleBtn);
-  chooseCategory(main.childNodes);
-  categoryIndex = -1;
-
-  document.getElementById("new-sheet")
-    .innerHTML = ".card-info {visibility: visible}";
-});
-
-// categoty chooser fx
-function chooseCategory(nodesColection) {
-  nodesColection.forEach((element, index) => {
-    element.addEventListener("click", () => {
-      drawCards(toggleBtn, index);
-      categoryIndex = index;
-    });
-  });
-}
+title.addEventListener("click", () => refreshPage());
 
 // Burger menu activation
 burger.addEventListener("click", () => activateMenu());
@@ -57,6 +41,8 @@ modeBtn.parentElement.addEventListener("click", () => {
     });
 
     gameModeOn(categoryIndex, toggleBtn);
+
+    startGame(categoryIndex, cards);
   } else {
     modeBtn.style.transform = "translateX(0px)";
     modeBtn.parentElement.style.backgroundColor = playModeColor;
@@ -73,9 +59,43 @@ modeBtn.parentElement.addEventListener("click", () => {
   toggleBtn = !toggleBtn;
 });
 
+const lisItems = document.querySelectorAll("menu-item");
+chooseCategory(lisItems);
+
+/* ************************ */
+/*          functions       */
+/* ************************ */
+
+// refresh page FX
+function refreshPage() {
+  drawCards(toggleBtn);
+  chooseCategory(main.childNodes);
+  categoryIndex = -1;
+
+  document.getElementById("new-sheet")
+    .innerHTML = ".card-info {visibility: visible}";
+}
+
+// activate burger menu, open/close
+function activateMenu() {
+  burgerMenu.classList.toggle("active");
+  burger.classList.toggle("active");
+  back.classList.toggle("active");
+}
+
+// categoty chooser fx
+function chooseCategory(nodesColection) {
+  nodesColection.forEach((element, index) => {
+    element.addEventListener("click", () => {
+      drawCards(toggleBtn, index);
+      categoryIndex = index;
+    });
+  });
+}
+
 // draw burger menu list
-function menu() {
-  const headersArr = [];
+(function burgerMenuDrawer() {
+  const headersArr = ["Home"];
   cards[0].forEach((el) => {
     headersArr.push(el.word);
   });
@@ -90,20 +110,13 @@ function menu() {
     menuList.appendChild(li);
 
     li.addEventListener("click", () => {
-      drawCards(toggleBtn, i);
-      activateMenu();
+      if (i === 0) {
+        refreshPage();
+        activateMenu();
+      } else {
+        drawCards(toggleBtn, i - 1);
+        activateMenu();
+      }
     });
   });
-}
-menu();
-
-// activate burger menu, open/close
-function activateMenu() {
-  burgerMenu.classList.toggle("active");
-  burger.classList.toggle("active");
-  back.classList.toggle("active");
-}
-
-const lisItems = document.querySelectorAll("menu-item");
-
-chooseCategory(lisItems);
+}());

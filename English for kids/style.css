@@ -66,6 +66,7 @@ header {
   gap: 4px;
   margin-right: 20px;
   z-index: 5;
+  cursor: pointer;
 }
 .line {
   width: 25px;
@@ -131,6 +132,12 @@ header {
 .menu-item {
   width: fit-content;
   z-index: 5;
+  font-size: xx-large;
+  transition: color 0.5s cubic-bezier(0, 0, 0, 1);
+  /* transition: step-start; */
+}
+.menu-item:hover {
+  color: yellow;
 }
 @media screen and (max-width: 430px) {
   .burger-menu {
@@ -139,6 +146,9 @@ header {
   }
   .burger-menu.active {
     transform: translateX(100vw);
+  }
+  .menu-item {
+    font-size: x-large;
   }
 }
 .container {
@@ -286,8 +296,10 @@ main {
 
 #game-bar {
   display: none;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   position: fixed;
+  padding: 0 40px;
   bottom: 0;
   left: 0;
   width: 100vw;
@@ -300,14 +312,18 @@ main {
 #game-bar.active {
   display: flex;
 }
+#game-bar img {
+  width: 40px;
+}
 .start-game {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  top: -25px;
+  position: absolute;
   width: 50px;
   height: 50px;
+  top: -25px;
+  left: calc(50vw - 25px);
   border-radius: 50%;
   user-select: none;
   cursor: pointer;
@@ -335,4 +351,54 @@ main {
 .start-game:active {
   color: var(--main-color);
   box-shadow: 0 0 4px 2px black, inset 0 0 7px black;
+}
+.disabled {
+  opacity: 0.5;
+}
+.final-window {
+  position: fixed;
+  width: 280px;
+  height: 160px;
+  left: calc(50vw - 150px);
+  top: calc(50vh - 100px);
+  /* border: 1px solid #fff; */
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(15px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease-in-out;
+}
+.final-window::before {
+  content: "";
+  position: absolute;
+  width: 290px;
+  height: 170px;
+  border-radius: 12px;
+  border: 1px solid rgb(130, 0, 255);
+  /* background-color: rgba(255, 255, 255, 0); */
+}
+.game-status {
+  font-size: xxx-large;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.close-btn {
+  position: absolute;
+  top: 70px;
+  color: black;
+  font-size: large;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+}
+.close-btn:hover {
+  color: rgb(82, 0, 0);
+  letter-spacing: 3px;
+}
+.close-btn:active {
+  letter-spacing: 20px;
 }
